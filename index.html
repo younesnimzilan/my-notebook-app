@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Notebook App</title>
+<link rel="manifest" href="manifest.json">
+<style>
+body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; text-align:
+center; }
+.container { max-width: 400px; margin: auto; background: white; padding: 20px; border-
+radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+input { width: 80%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-
+radius: 5px; }
+button { padding: 10px 20px; background-color: #28a745; color: white; border: none;
+border-radius: 5px; cursor: pointer; }
+ul { list-style-type: none; padding: 0; text-align: left; margin-top: 20px; }
+li { background: #eee; padding: 10px; margin-bottom: 5px; border-radius: 5px; display:
+flex; justify-content: space-between; }
+.delete-btn { background-color: #dc3545; padding: 3px 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>My Notes (Database)</h2>
+<input type="text" id="noteInput" placeholder="Write a note here...">
+<br>
+<button onclick="saveNote()">Save Note</button>
+<ul id="notesList"></ul></div>
+<script>
+window.onload = function() {
+displayNotes();
+};
+function saveNote() {
+let noteInput = document.getElementById('noteInput');
+let noteText = noteInput.value.trim();
+if (noteText === '') return;
+let notes = JSON.parse(localStorage.getItem('my_notes')) || [];
+notes.push(noteText);
+localStorage.setItem('my_notes', JSON.stringify(notes));
+noteInput.value = '';
+displayNotes();
+}
+function displayNotes() {
+let notesList = document.getElementById('notesList');
+notesList.innerHTML = '';
+let notes = JSON.parse(localStorage.getItem('my_notes')) || [];
+notes.forEach((note, index) => {
+let li = document.createElement('li');
+li.innerHTML = `${note} <button class="delete-btn"
+onclick="deleteNote(${index})">X</button>`;notesList.appendChild(li);
+});
+}
+function deleteNote(index) {
+let notes = JSON.parse(localStorage.getItem('my_notes')) || [];
+notes.splice(index, 1);
+localStorage.setItem('my_notes', JSON.stringify(notes));
+displayNotes();
+}
+</script>
+</body>
+</html>

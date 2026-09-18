@@ -1,0 +1,9 @@
+{
+    "name":"My Notebook App",
+    "short_name":"Notebook",
+    "start_url":"index.html",
+    "display":"standalone",
+    "background_color":"#f4f4f9",
+    "theme_color":"#28a745",
+    "orientation":"portrait"
+}
