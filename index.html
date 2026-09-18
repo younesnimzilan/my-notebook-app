@@ -56,6 +56,14 @@ let notes = JSON.parse(localStorage.getItem('my_notes')) || [];
 notes.splice(index, 1);
 localStorage.setItem('my_notes', JSON.stringify(notes));
 displayNotes();
+// ‫الـ‬ ‫تفعيل‬ ‫كود‬ Service Worker ‫مستقل‬ ‫كمشروع‬ ‫التثبيت‬ ‫لتشغيل‬
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+self.addEventListener('fetch', function(event) {
+event.respondWith(fetch(event.request));
+});
+`));
+}
 }
 </script>
 </body>
